@@ -13,11 +13,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build APK with Buildozer
-        uses: ArtemSBulgakov/buildozer-action@v1
-        with:
-          workdir: pomodoro_kivy_app
-          buildozer_version: stable
+      - name: Build APK with official Buildozer Docker image
+        run: |
+          docker run --rm \
+            -v "${{ github.workspace }}/pomodoro_kivy_app:/home/user/hostcwd" \
+            ghcr.io/kivy/buildozer:latest android debug
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
